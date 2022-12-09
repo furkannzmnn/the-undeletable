@@ -1,0 +1,25 @@
+mysqlConnection:
+  host: localhost
+  port: 3306
+  username: username
+  password: password
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/infacore
+  tables:
+    - user
+    - usergroup
+    - usergroupmember
+
+
+kafkaConnection:
+    host: localhost
+    port: 3306
+    username: username
+    password: password
+    bootstrapServers: localhost:9092
+    topic: infacore
+    groupId: infacore
+    keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+    valueDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+    keySerializer: org.apache.kafka.common.serialization.StringSerializer
+    valueSerializer: org.apache.kafka.common.serialization.StringSerializer
