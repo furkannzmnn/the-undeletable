@@ -5,6 +5,7 @@ import java.util.List;
 public class MysqlConnection extends BaseConnection {
     protected String driverClassName;
     protected String url;
+    protected String dbName;
     private List<String> tables;
 
     public String getDriverClassName() {
@@ -29,5 +30,13 @@ public class MysqlConnection extends BaseConnection {
 
     public void setTables(List<String> tables) {
         this.tables = tables;
+    }
+
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
     }
 }

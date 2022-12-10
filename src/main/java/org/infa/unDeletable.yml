@@ -1,12 +1,13 @@
 mysqlConnection:
   host: localhost
-  port: 3306
-  username: username
+  port: 3305
+  username: root
+  dbName: customerdb
   password: password
   driverClassName: com.mysql.jdbc.Driver
-  url: jdbc:mysql://localhost:3306/infacore
+  url: jdbc:mysql://localhost:3306/lib
   tables:
-    - user
+    - users
     - usergroup
     - usergroupmember
 

@@ -5,8 +5,7 @@ public class Connection {
     private final KafkaConnection kafkaConnection;
 
     public Connection() {
-        this.mysqlConnection = null;
-        this.kafkaConnection = null;
+        this((MysqlConnection) null, (KafkaConnection)null);
     }
 
     public Connection(MysqlConnection mysqlConnection, KafkaConnection kafkaConnection) {
