@@ -19,23 +19,23 @@ public final class ConnectionFactory {
     }
 
     public void connect(String pathYml) {
-        final Connection connection = getConnection(pathYml);
+        final Connection connection = getConnectionConfig(pathYml);
         final DebeziumStarter connected = debeziumConnector.connect(connection, Optional.empty());
         LogUtil.log(LogUtil.INFO, () -> "Connected to debezium engine" + connected);
     }
 
     public void connect(String pathYml, Runnable script) {
-        final Connection connection = getConnection(pathYml);
+        final Connection connection = getConnectionConfig(pathYml);
         debeziumConnector.connect(connection, script);
+        LogUtil.log(LogUtil.INFO, () -> "Connected to debezium engine" + connection.toString());
     }
 
-    private Connection getConnection(String pathYml) {
+    private Connection getConnectionConfig(String pathYml) {
         final FileResponse<Connection> connectionFileResponse = fileInitializer.initialize(pathYml);
         if (connectionFileResponse.hasError()) {
             throw new FileOpenException(connectionFileResponse.message());
         }
 
-        final Connection connection = connectionFileResponse.data();
-        return connection;
+        return connectionFileResponse.data();
     }
 }
