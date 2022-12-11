@@ -7,24 +7,38 @@ import io.debezium.engine.RecordChangeEvent;
 import io.debezium.engine.format.ChangeEventFormat;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.infa.Connection;
-import org.infa.model.DebeziumSignal;
+import org.infa.model.DebeziumStarter;
 
-public class DebeziumConnector implements Connector<DebeziumSignal, Connection> {
+import java.util.Optional;
+import java.util.function.Consumer;
+
+public class DebeziumConnector implements Connector<DebeziumStarter, Connection> {
     private DebeziumEngine<RecordChangeEvent<SourceRecord>> engine;
 
     @Override
-    public DebeziumSignal connect(Connection data) {
+    public DebeziumStarter connect(Connection data, Optional<Runnable> script) {
         final Configuration configuration = DebeziumConfigLoader.load(data);
 
         engine = DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
                 .using(configuration.asProperties())
-                .notifying(this::handleEvent)
+                .notifying(getEventConsumer(script))
                 .build();
 
-        return new DebeziumSignal(engine);
+        return new DebeziumStarter(engine);
     }
 
-    private void handleEvent(RecordChangeEvent<SourceRecord> sourceRecordRecordChangeEvent) {
-        System.out.println("Received event: " + sourceRecordRecordChangeEvent);
+    private Consumer<RecordChangeEvent<SourceRecord>> getEventConsumer(Optional<Runnable> script) {
+        return record -> {
+            final boolean present = script.isPresent();
+            if (present) {
+                script.get().run();
+            } else {
+                handleEvent(record);
+            }
+        };
+    }
+
+    private void handleEvent(RecordChangeEvent<SourceRecord> record) {
+        System.out.println("Received event: " + record);
     }
 }
