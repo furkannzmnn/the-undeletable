@@ -11,10 +11,11 @@ import java.util.Optional;
 
 public final class ConnectionFactory {
 
-    private final FileInitializer<Connection> fileInitializer = new YmlInitializer();
+    private final FileInitializer<Connection> fileInitializer;
     private final Connector<DebeziumStarter, Connection> debeziumConnector;
 
-    public ConnectionFactory(Connector<DebeziumStarter, Connection> debeziumConnector) {
+    public ConnectionFactory(FileInitializer<Connection> fileInitializer, Connector<DebeziumStarter, Connection> debeziumConnector) {
+        this.fileInitializer = fileInitializer;
         this.debeziumConnector = debeziumConnector;
     }
 

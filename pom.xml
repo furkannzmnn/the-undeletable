@@ -45,15 +45,6 @@
                 <version>1.4.2.Final</version>
             </dependency>
 
-            <dependency>
-                <groupId>io.debezium</groupId>
-                <artifactId>debezium-core</artifactId>
-                <version>1.4.2.Final</version>
-            </dependency>
-
-
-
-
 
 
             <dependency>
