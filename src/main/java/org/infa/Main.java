@@ -6,8 +6,11 @@ import org.infa.util.LogUtil;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        new ConnectionFactory(new JsonInitializer(), new DebeziumConnector())
-                .withCustomScript(ExampleClient.of())
+        ConnectionFactory.builder()
+                .fileInitializer(new YmlInitializer())
+                .debeziumConnector(new DebeziumConnector())
+                .script(new ExampleClient())
+                .build()
                 .connect("/Users/furkanozmen/Desktop/the-undeletable/src/main/java/org/infa/unDeletable.yml");
     }
 }
