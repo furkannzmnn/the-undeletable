@@ -1,40 +1,16 @@
 
 S
 #.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
-[
-+src/main/java/org/infa/KafkaConnection.java,a/3/a3914ebded629f1b9c21610123a67226ba8fd7fc
 9
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
-Z
-*src/main/java/org/infa/BaseConnection.java,2/3/2382cddea5c94ff11879d3e1fbe2ff448f9d5821
-a
-1src/main/java/org/infa/MysqlOutputConnection.java,c/c/cc9724a778ff5000fab850f6bff6d972ee547adf
 \
 ,.idea/inspectionProfiles/Project_Default.xml,4/9/496a238a6afa168dbaf6efd37bb459331589579c
-V
-&src/main/java/org/infa/Connection.java,a/a/aa92bc01e71c43fc215d4047c8c09fa10a37774d
-g
-7src/main/java/org/infa/exception/FileOpenException.java,7/0/70cf12d092d07e9fa195fd6286b1694767452a9a
-^
-.src/main/java/org/infa/model/FileResponse.java,c/5/c50ea15d78df09877fe7b8c92bdf42d5af95e46e
 X
 (src/main/java/org/infa/util/LogUtil.java,c/e/ce31a29152cfdd9feb3cac505f10bebe404c0597
-[
-+src/main/java/org/infa/MysqlConnection.java,2/5/252c9c6f5a21affa0e531aab1ffd29d69d939e16
 \
 ,src/main/java/org/infa/util/StringUtils.java,e/5/e5ec1e3f46a651822b2375f8f8f1f17b983ecfdf
-[
-+src/main/java/org/infa/FileInitializer.java,c/c/cc09ff84c185281153e6326a9c67f4324d773c82
-e
-5src/main/java/org/infa/connection/YmlInitializer.java,3/7/37c2be71c11f39fc012ebf190ba7daebb369499b
-`
-0src/main/java/org/infa/connection/Connector.java,1/0/10c9944709bdd251113327b01687b9069f66c14a
-V
-&src/main/java/org/infa/unDeletable.yml,4/f/4ff09ac02d7ae997d0da43ae2cb8f1804c014e31
-h
-8src/main/java/org/infa/connection/ConnectionFactory.java,9/7/97ba5b4493a4a40d7415503cfdace3e179f56220
-P
- src/main/java/org/infa/Main.java,6/d/6db1fb52094a2fb8788c3b1a317c5ee224be39e4
+7
+pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
