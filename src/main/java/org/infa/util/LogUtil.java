@@ -37,4 +37,8 @@ public final class LogUtil {
     public static void log(String type, Supplier<String> supplier) {
         log(supplier.get(), type);
     }
+
+    public static void log(Supplier<String> supplier, Class<?> source) {
+        log("source = " + source.getName() + " " + supplier.get(), INFO);
+    }
 }
