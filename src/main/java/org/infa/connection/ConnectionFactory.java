@@ -18,6 +18,10 @@ public final class ConnectionFactory {
         this.debeziumConnector = builder.debeziumConnector;
     }
 
+    public ConnectionFactory() {
+        this.script = null;
+    }
+
     public void connect(String pathYml) {
         final Connection connection = getConnectionConfig(pathYml);
         final DebeziumStarter connected = getInitializerMethod(connection);
