@@ -7,6 +7,7 @@ import io.debezium.engine.RecordChangeEvent;
 import io.debezium.engine.format.CloudEvents;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.protocol.types.Field;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.infa.Connection;
 import org.infa.RunnableScript;
@@ -17,28 +18,34 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
 
 public class DebeziumConnector implements Connector<DebeziumStarter, Connection> {
+    private RunnableScript<String, String> script;
     private DebeziumEngine<ChangeEvent<String, String>> engine;
 
     @Override
-    public DebeziumStarter connect(Connection data, RunnableScript<String, String> script) {
+    public DebeziumStarter connect(Connection data) {
         final Configuration configuration = DebeziumConfigLoader.load(data);
 
         engine = DebeziumEngine.create(CloudEvents.class)
                 .using(configuration.asProperties())
-                .notifying(handleEvent(script))
+                .notifying(handleEvent())
                 .build();
 
         return new DebeziumStarter(engine);
     }
 
-    private Consumer<ChangeEvent<String, String>> handleEvent(RunnableScript<String, String> script) {
-        return each -> {
-            if (script == null) {
-                sendToKafka(each);
-            } else {
-                executeCustomScript(each, script);
-            }
-        };
+
+    @Override
+    public DebeziumStarter connectWithScript(Connection data, RunnableScript<String, String> script) {
+        final Configuration configuration = DebeziumConfigLoader.load(data);
+        engine = DebeziumEngine.create(CloudEvents.class)
+                .using(configuration.asProperties())
+                .notifying(executeCustomScript(script))
+                .build();
+        return new DebeziumStarter(engine);
+    }
+
+    private Consumer<ChangeEvent<String, String>> handleEvent() {
+        return this::sendToKafka;
     }
 
     private void sendToKafka(ChangeEvent<String, String> event) {
@@ -50,18 +57,14 @@ public class DebeziumConnector implements Connector<DebeziumStarter, Connection>
 
     }
 
-    private void executeCustomScript(ChangeEvent<String, String> event, RunnableScript<String, String> runnableScript) {
-        String key = event.key();
-        String value = event.value();
-        runnableScript.run(key, value);
+    private Consumer<ChangeEvent<String, String>> executeCustomScript(RunnableScript<String, String> runnableScript) {
+        this.script = runnableScript;
+        return this::run;
     }
 
-
-    private void handleEvent(RecordChangeEvent<SourceRecord> record) {
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.schedule(() -> {
-            final Object value = record.record().value();
-            final String topic = record.record().topic();
-        }, 10, java.util.concurrent.TimeUnit.SECONDS);
+    private void run(ChangeEvent<String, String> event) {
+        String key = event.key();
+        String value = event.value();
+        script.run(key, value);
     }
 }
