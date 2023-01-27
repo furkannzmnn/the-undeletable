@@ -6,12 +6,8 @@ import org.infa.util.LogUtil;
 
 public class Main {
     public static void main(String[] args) {
-        ConnectionFactory.builder()
-                .fileInitializer(new YmlInitializer())
-                .debeziumConnector(new DebeziumConnector())
-                .script(new ExampleClient())
-                .build()
-                .connect("/Users/furkanozmen/Desktop/the-undeletable/src/main/java/org/infa/unDeletable.yml");
+        new ConnectionFactory()
+                .defaultConnect("/Users/furkanozmen/Desktop/the-undeletable/src/main/java/org/infa/unDeletable.yml");
     }
 }
 
