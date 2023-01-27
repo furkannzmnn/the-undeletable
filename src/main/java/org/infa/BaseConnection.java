@@ -1,6 +1,7 @@
 package org.infa;
 
 public class BaseConnection {
+    // BU MAIN BRANCH
     protected String host;
     protected String port;
     protected String username;
