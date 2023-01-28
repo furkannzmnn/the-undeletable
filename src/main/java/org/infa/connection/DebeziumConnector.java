@@ -18,7 +18,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Consumer;
 
 public class DebeziumConnector implements Connector<DebeziumStarter, Connection> {
-    private RunnableScript<String, String> script;
     private DebeziumEngine<ChangeEvent<String, String>> engine;
 
     @Override
@@ -57,14 +56,12 @@ public class DebeziumConnector implements Connector<DebeziumStarter, Connection>
 
     }
 
-    private Consumer<ChangeEvent<String, String>> executeCustomScript(RunnableScript<String, String> runnableScript) {
-        this.script = runnableScript;
-        return this::run;
-    }
 
-    private void run(ChangeEvent<String, String> event) {
-        String key = event.key();
-        String value = event.value();
-        script.run(key, value);
+    private Consumer<ChangeEvent<String, String>> executeCustomScript(RunnableScript<String, String> runnableScript) {
+        return (event) ->  {
+            String key = event.key();
+            String value = event.value();
+            runnableScript.run(key, value);
+        };
     }
 }
