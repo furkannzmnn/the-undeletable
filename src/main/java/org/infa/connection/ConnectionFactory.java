@@ -24,11 +24,11 @@ public final class ConnectionFactory {
 
     public void connect(String pathYml) {
         final Connection connection = getConnectionConfig(pathYml);
-        final DebeziumStarter connected = getInitializerMethod(connection);
+        final DebeziumStarter connected = initializeAndStart(connection);
         LogUtil.log(LogUtil.INFO, () -> "Connected to debezium engine" + connected);
     }
 
-    private DebeziumStarter getInitializerMethod(Connection connection) {
+    private DebeziumStarter initializeAndStart(Connection connection) {
         return script == null ?
                 debeziumConnector.connect(connection) :
                 debeziumConnector.connectWithScript(connection, script);
